@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendée Globe RL — Episode Viewer</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.27.0/plotly.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div>
+      <div class="logo">VENDÉE GLOBE RL</div>
+      <div class="logo-sub">Reinforcement Learning · ERA5 Wind Data · PPO Agent</div>
+    </div>
+  </div>
+  <div style="display:flex; gap:10px; align-items:center;">
+    <div class="header-badge">
+      <div class="dot-pulse"></div>
+      TEST SEASON 2024–2025
+    </div>
+    <div class="header-badge">PPO · NET [256,256,256] · 10M STEPS</div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">Episode Summary</div>
+      <div class="prob-bar-container">
+        <div class="prob-label-row">
+          <span style="font-size:9px;letter-spacing:1.5px;color:var(--text-muted)">OUTCOME DISTRIBUTION</span>
+          <span style="font-size:9px;color:var(--text-muted)">50 EPISODES</span>
+        </div>
+        <div class="prob-bar">
+          <div class="prob-seg seg-finish" style="width:80%" title="FINISH 84.7d">
+            <span>80%</span>
+          </div>
+          <div class="prob-seg seg-dnf-mid" style="width:11%" title="DNF before WP1">
+            <span>11%</span>
+          </div>
+          <div class="prob-seg seg-dnf-late" style="width:9%" title="DNF after WP6">
+            <span>9%</span>
+          </div>
+        </div>
+        <div class="prob-legend">
+          <span class="leg-item leg-finish">✓ Finish</span>
+          <span class="leg-item leg-dnf-mid">✕ DNF early</span>
+          <span class="leg-item leg-dnf-late">✕ DNF late</span>
+        </div>
+      </div>
+    </div>
+    <div class="episode-list" id="episode-list"></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="globe-container">
+      <div class="loading-overlay" id="loading">
+        <div class="loading-ring"></div>
+      </div>
+      <div class="ep-title-overlay">
+        <div class="ep-title-label" id="ep-title">EPISODE 0</div>
+        <div class="ep-title-sub" id="ep-subtitle">INITIALIZING...</div>
+      </div>
+      <div class="season-badge">
+        SEASON<span>2024–25</span>
+      </div>
+      <div id="plotly-globe"></div>
+    </div>
+
+    <!-- STATS BAR -->
+    <div class="stats-panel">
+      <div class="stat-block">
+        <div class="stat-label">Duration</div>
+        <div class="stat-value highlight" id="stat-days">—</div>
+        <div class="stat-unit">DAYS</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">Distance</div>
+        <div class="stat-value" id="stat-dist">—</div>
+        <div class="stat-unit">NAUTICAL MILES</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">Avg Speed</div>
+        <div class="stat-value highlight" id="stat-speed">—</div>
+        <div class="stat-unit">KNOTS</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">Waypoints</div>
+        <div class="stat-value" id="stat-wps">—</div>
+        <div class="stat-unit">OF 7 REACHED</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">Gates</div>
+        <div class="gate-indicators" id="stat-gates">
+          <div class="gate-chip">GOOD HOPE</div>
+          <div class="gate-chip">LEEUWIN</div>
+          <div class="gate-chip">CAPE HORN</div>
+        </div>
+        <div class="stat-unit" style="margin-top:6px">NAVIGATION GATES</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">Outcome</div>
+        <div class="stat-value" id="stat-outcome">—</div>
+        <div class="stat-unit" id="stat-outcome-sub"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
