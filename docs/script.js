@@ -335,3 +335,70 @@ function loadEpisode(id) {
 
 // Auto-load first episode
 loadEpisode(0);
+// ============================================================
+//  TAB NAVIGATION — SIMULATION / METEOROLOGY
+// ============================================================
+
+(function () {
+  const tabs = document.querySelectorAll('.view-tab');
+  const panes = {
+    simulation: document.getElementById('tab-simulation'),
+    meteorology: document.getElementById('tab-meteorology'),
+  };
+  const hint = document.getElementById('tab-hint');
+  const video = document.getElementById('met-video');
+  const missingOverlay = document.getElementById('video-missing');
+
+  // Detect missing video file once metadata has had a chance to load
+  video.addEventListener('error', function () {
+    missingOverlay.classList.add('visible');
+  });
+  // If src is empty or invalid, the error event fires immediately.
+  // Also guard against browsers that fire 'emptied' without 'error':
+  if (video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE ||
+    video.readyState === HTMLMediaElement.HAVE_NOTHING) {
+    // Give the browser a tick to attempt the load first
+    setTimeout(function () {
+      if (video.readyState === HTMLMediaElement.HAVE_NOTHING &&
+        video.networkState !== HTMLMediaElement.NETWORK_LOADING) {
+        missingOverlay.classList.add('visible');
+      }
+    }, 800);
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      const target = tab.dataset.tab;
+
+      // Update active tab button
+      tabs.forEach(function (t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+
+      // Swap panes
+      Object.keys(panes).forEach(function (key) {
+        if (key === target) {
+          panes[key].classList.remove('hidden');
+        } else {
+          panes[key].classList.add('hidden');
+        }
+      });
+
+      // Update hint text
+      if (target === 'meteorology') {
+        hint.textContent = 'ERA5 WIND FIELD · TWS HEATMAP + BARBS';
+        // Pause Plotly resize issues by triggering a resize on the globe
+        // when switching back to simulation
+      } else {
+        hint.textContent = 'SELECT AN EPISODE FROM THE SIDEBAR';
+        // Pause video when switching away
+        if (video && !video.paused) { video.pause(); }
+        // Trigger Plotly relayout so the globe fills its container correctly
+        setTimeout(function () {
+          if (typeof Plotly !== 'undefined') {
+            Plotly.relayout('plotly-globe', {});
+          }
+        }, 50);
+      }
+    });
+  });
+})();

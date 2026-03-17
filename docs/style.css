@@ -434,10 +434,93 @@ header {
   overflow: hidden;
 }
 
+/* ========== TAB NAVIGATION ========== */
+.view-tabs {
+  display: flex;
+  align-items: center;
+  height: 38px;
+  flex-shrink: 0;
+  background: var(--panel-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 4px;
+  gap: 2px;
+}
+
+.view-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 18px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  position: relative;
+  top: 1px;
+  /* align bottom border with container border */
+}
+
+.view-tab .tab-icon {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.view-tab:hover {
+  color: var(--text-primary);
+  background: rgba(0, 229, 255, 0.04);
+}
+
+.view-tab.active {
+  color: var(--accent-cyan);
+  border-bottom-color: var(--accent-cyan);
+  background: rgba(0, 229, 255, 0.05);
+}
+
+.view-tab.active .tab-icon {
+  opacity: 1;
+  text-shadow: 0 0 8px var(--accent-cyan);
+}
+
+.tab-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--border);
+  margin: 0 8px;
+}
+
+.tab-hint {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* ========== TAB PANES ========== */
+.tab-pane {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.tab-pane.hidden {
+  display: none;
+}
+
+/* ========== GLOBE (unchanged, now inside tab-pane) ========== */
 .globe-container {
   flex: 1;
   position: relative;
   background: #040d1a;
+  min-height: 0;
 }
 
 #plotly-globe {
@@ -622,4 +705,102 @@ header {
   color: var(--accent-gold);
   line-height: 1;
   margin-top: 2px;
+}
+
+/* ========== VIDEO CONTAINER ========== */
+.video-container {
+  flex: 1;
+  position: relative;
+  background: #040d1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  /* Tint the native controls to match dark theme on supported browsers */
+  color-scheme: dark;
+}
+
+/* Season badge variant for video */
+.video-season-badge {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  z-index: 10;
+  background: rgba(4, 13, 26, 0.8);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.video-season-badge span {
+  display: block;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: var(--accent-gold);
+  line-height: 1;
+  margin-top: 2px;
+}
+
+/* Video missing overlay */
+.video-missing-overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--ocean-deep);
+  z-index: 30;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.video-missing-overlay.visible {
+  display: flex;
+}
+
+.video-missing-icon {
+  font-size: 48px;
+  color: var(--text-muted);
+  opacity: 0.3;
+}
+
+.video-missing-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 22px;
+  letter-spacing: 4px;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.video-missing-sub {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  opacity: 0.5;
+  text-align: center;
+  max-width: 340px;
+  line-height: 1.8;
+}
+
+.video-missing-sub code {
+  color: var(--accent-cyan);
+  opacity: 0.8;
+  background: rgba(0, 229, 255, 0.07);
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-family: 'Space Mono', monospace;
 }

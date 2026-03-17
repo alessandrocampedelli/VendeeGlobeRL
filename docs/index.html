@@ -63,54 +63,143 @@
 
     <!-- MAIN -->
     <main class="main">
-      <div class="globe-container">
-        <div class="loading-overlay" id="loading">
-          <div class="loading-ring"></div>
-        </div>
-        <div class="ep-title-overlay">
-          <div class="ep-title-label" id="ep-title">EPISODE 0</div>
-          <div class="ep-title-sub" id="ep-subtitle">INITIALIZING...</div>
-        </div>
-        <div id="plotly-globe"></div>
+
+      <!-- TAB NAV -->
+      <div class="view-tabs">
+        <button class="view-tab active" data-tab="simulation">
+          <span class="tab-icon">◎</span> SIMULATION
+        </button>
+        <button class="view-tab" data-tab="meteorology">
+          <span class="tab-icon">◈</span> METEOROLOGY
+        </button>
+        <div class="tab-divider"></div>
+        <span class="tab-hint" id="tab-hint">SELECT AN EPISODE FROM THE SIDEBAR</span>
       </div>
 
-      <!-- STATS BAR -->
-      <div class="stats-panel">
-        <div class="stat-block">
-          <div class="stat-label">Duration</div>
-          <div class="stat-value highlight" id="stat-days">—</div>
-          <div class="stat-unit">DAYS</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-label">Distance</div>
-          <div class="stat-value" id="stat-dist">—</div>
-          <div class="stat-unit">NAUTICAL MILES</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-label">Avg Speed</div>
-          <div class="stat-value highlight" id="stat-speed">—</div>
-          <div class="stat-unit">KNOTS</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-label">Waypoints</div>
-          <div class="stat-value" id="stat-wps">—</div>
-          <div class="stat-unit">OF 7 REACHED</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-label">Gates</div>
-          <div class="gate-indicators" id="stat-gates">
-            <div class="gate-chip">GOOD HOPE</div>
-            <div class="gate-chip">LEEUWIN</div>
-            <div class="gate-chip">CAPE HORN</div>
+      <!-- TAB: SIMULATION -->
+      <div class="tab-pane" id="tab-simulation">
+        <div class="globe-container">
+          <div class="loading-overlay" id="loading">
+            <div class="loading-ring"></div>
           </div>
-          <div class="stat-unit" style="margin-top:6px">NAVIGATION GATES</div>
+          <div class="ep-title-overlay">
+            <div class="ep-title-label" id="ep-title">EPISODE 0</div>
+            <div class="ep-title-sub" id="ep-subtitle">INITIALIZING...</div>
+          </div>
+          <div id="plotly-globe"></div>
         </div>
-        <div class="stat-block">
-          <div class="stat-label">Outcome</div>
-          <div class="stat-value" id="stat-outcome">—</div>
-          <div class="stat-unit" id="stat-outcome-sub"></div>
+
+        <!-- STATS BAR -->
+        <div class="stats-panel">
+          <div class="stat-block">
+            <div class="stat-label">Duration</div>
+            <div class="stat-value highlight" id="stat-days">—</div>
+            <div class="stat-unit">DAYS</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Distance</div>
+            <div class="stat-value" id="stat-dist">—</div>
+            <div class="stat-unit">NAUTICAL MILES</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Avg Speed</div>
+            <div class="stat-value highlight" id="stat-speed">—</div>
+            <div class="stat-unit">KNOTS</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Waypoints</div>
+            <div class="stat-value" id="stat-wps">—</div>
+            <div class="stat-unit">OF 7 REACHED</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Gates</div>
+            <div class="gate-indicators" id="stat-gates">
+              <div class="gate-chip">GOOD HOPE</div>
+              <div class="gate-chip">LEEUWIN</div>
+              <div class="gate-chip">CAPE HORN</div>
+            </div>
+            <div class="stat-unit" style="margin-top:6px">NAVIGATION GATES</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Outcome</div>
+            <div class="stat-value" id="stat-outcome">—</div>
+            <div class="stat-unit" id="stat-outcome-sub"></div>
+          </div>
         </div>
       </div>
+
+      <!-- TAB: METEOROLOGY -->
+      <div class="tab-pane hidden" id="tab-meteorology">
+        <div class="video-container">
+          <div class="ep-title-overlay">
+            <div class="ep-title-label">WIND FIELD</div>
+            <div class="ep-title-sub">ERA5 REANALYSIS · TEST SEASON 2024–2025</div>
+          </div>
+
+          <!-- season badge top-right -->
+          <div class="video-season-badge">
+            <span style="font-size:8px;letter-spacing:2px;color:var(--text-muted)">DATA SOURCE</span>
+            <span>ERA5</span>
+          </div>
+
+          <video id="met-video" controls preload="metadata">
+            <source src="met_globe_animation.mp4" type="video/mp4">
+            <p class="video-fallback">
+              Video not found. Place <code>met_globe_animation.mp4</code> in the same directory.
+            </p>
+          </video>
+
+          <!-- video not found overlay (shown if video fails to load) -->
+          <div class="video-missing-overlay" id="video-missing">
+            <div class="video-missing-icon">◈</div>
+            <div class="video-missing-title">VIDEO NOT FOUND</div>
+            <div class="video-missing-sub">
+              Place <code>met_globe_animation.mp4</code> in the same directory as this page
+              and reload.
+            </div>
+          </div>
+        </div>
+
+        <!-- VIDEO INFO BAR -->
+        <div class="stats-panel">
+          <div class="stat-block">
+            <div class="stat-label">Wind Grid</div>
+            <div class="stat-value" style="font-size:22px">2.5°</div>
+            <div class="stat-unit">ERA5 RESOLUTION</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Upsample</div>
+            <div class="stat-value highlight" style="font-size:22px">×4</div>
+            <div class="stat-unit">BICUBIC ZOOM → ~0.6°</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Frame Step</div>
+            <div class="stat-value" style="font-size:22px">12H</div>
+            <div class="stat-unit">SIMULATED TIME / FRAME</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Export FPS</div>
+            <div class="stat-value highlight" style="font-size:22px">10</div>
+            <div class="stat-unit">FRAMES PER SECOND</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Wind Range</div>
+            <div class="gate-indicators" style="flex-direction:column;gap:4px;align-items:center">
+              <div class="gate-chip passed" style="font-size:8px;padding:2px 8px">0 kt — CALM</div>
+              <div class="gate-chip passed"
+                style="font-size:8px;padding:2px 8px;border-color:rgba(255,213,79,0.4);color:var(--accent-gold)">45+ kt
+                — STORM</div>
+            </div>
+            <div class="stat-unit" style="margin-top:6px">TWS COLORMAP</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Codec</div>
+            <div class="stat-value" style="font-size:16px;letter-spacing:1px">H.264</div>
+            <div class="stat-unit">libx264 · CRF 18</div>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 
