@@ -2,7 +2,17 @@
 
 An interactive web-based viewer for visualizing simulation episodes produced by a Reinforcement Learning agent trained to complete the Vendée Globe solo sailing race.
 
----
+
+## How to run it ?
+
+1. Open VendeeGlobe_RL_ERA5.ipynb in Google Colab
+
+2. Set the MODE: Locate the configuration cell containing the MODE variable.
+    - Set MODE = 'train' if you want to run the training loop on the 2016-2017 and 2020-2021 seasons.
+
+    - Set MODE = 'test' if you want to evaluate a pre-trained model on the unseen 2024-2025 season. Be sure to upload VendeeGlobe_RL_ERA5.zip on   Colab and change the path variable in the relative code cell to read it.
+
+3. Run the remaining  cells (class and methods definitions, dataset download ...). Based on the MODE you chose, you should run the training cell or the simulation cell
 
 ## Project Overview
 
